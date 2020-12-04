@@ -13,28 +13,74 @@ class Homepage extends StatelessWidget {
     return new Scaffold(
       appBar: new AppBar(
         // title: new Text('Green citizen'),
-        leading: new Image.asset('img/Prestashop-logo.png',
-            fit: BoxFit.contain),
+        leading:
+            new Image.asset('img/Prestashop-logo.png', fit: BoxFit.contain),
         actions: <Widget>[
           new FlatButton(
-            // onPressed: ,
+              // onPressed: ,
               child: new Icon(Icons.account_box)),
           new FlatButton(
-            // onPressed: ,
+              // onPressed: ,
               child: new Icon(Icons.gps_fixed)),
           new FlatButton(
-            // onPressed: ,
+              // onPressed: ,
               child: new Icon(Icons.shopping_cart_rounded)),
           new FlatButton(
-            // onPressed: ,
+              // onPressed: ,
               child: new Icon(Icons.camera_alt))
         ],
         centerTitle: true,
         elevation: 20.0,
         backgroundColor: Colors.green,
       ),
-      body: new Center(
-        child: Text('Homepage'),
+      body: Container(
+        child: MyCustomForm(),
+      ),
+    );
+  }
+}
+
+class MyCustomForm extends StatefulWidget {
+  @override
+  MyCustomFormState createState() {
+    return MyCustomFormState();
+  }
+}
+
+class MyCustomFormState extends State<MyCustomForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    // Construire le formulaire avec _formKey créé au-dessus
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFormField(
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Veuillez saisir un texte';
+              }
+              return null;
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: RaisedButton(
+              onPressed: () {
+                // Retourne true si le formulaire est valide, sinon false
+                if (_formKey.currentState.validate()) {
+                  // Affiche le Snackbar si le formulaire est valide
+                  Scaffold.of(context).showSnackBar(
+                      SnackBar(content: Text('Traitement en cours')));
+                }
+              },
+              child: Text('Envoyer'),
+            ),
+          ),
+        ],
       ),
     );
   }
