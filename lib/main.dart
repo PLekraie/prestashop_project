@@ -8,12 +8,28 @@ void main() {
   runApp(new MyApp());
 }
 
+const MaterialColor white = const MaterialColor(
+  0xFFFFFFFF,
+  const <int, Color>{
+    50: const Color(0xFFFFFFFF),
+    100: const Color(0xFFFFFFFF),
+    200: const Color(0xFFFFFFFF),
+    300: const Color(0xFFFFFFFF),
+    400: const Color(0xFFFFFFFF),
+    500: const Color(0xFFFFFFFF),
+    600: const Color(0xFFFFFFFF),
+    700: const Color(0xFFFFFFFF),
+    800: const Color(0xFFFFFFFF),
+    900: const Color(0xFFFFFFFF),
+  },
+);
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Mon application',
-      theme: ThemeData(primarySwatch: Colors.yellow),
+      theme: ThemeData(primarySwatch: white),
       debugShowCheckedModeBanner: false,
       home: new Home(),
     );
@@ -55,8 +71,7 @@ class _Home extends State<Home> {
               child: new Icon(Icons.camera_alt))
         ],
         centerTitle: true,
-        elevation: 20.0,
-        backgroundColor: Colors.green,
+        elevation: 20.0
       ),
       // body: new Layout(
       // color: Colors.yellow,
