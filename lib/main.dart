@@ -50,28 +50,40 @@ class _Home extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: new Text('Projet prestashop'),
-        leading: new FlatButton(onPressed: getNewScaffoldForHome,
-          child: Image.asset('img/Prestashop-logo.png'),
+          title: Image.asset('img/logo.png'),
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              );
+            },
+          ),
+          actions: <Widget>[
+            new FlatButton(
+                onPressed: getNewScaffoldForAccount,
+                child: new Icon(Icons.account_circle_outlined)),
+            new FlatButton(
+                onPressed: getNewScaffoldForShop,
+                child: new Icon(Icons.shopping_cart_rounded)),
+          ],
+          centerTitle: true,
+          elevation: 2.0),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+                child: TextField(
+              decoration: InputDecoration(hintText: 'Enter a search term'),
+            )),
+            ListTile(title: new Text("item 1")),
+            ListTile(title: new Text("item 2")),
+            ListTile(title: new Text("item 2")),
+          ],
         ),
-        // leading: new Image.asset('img/logo_greencitizen-court.png',
-        //     fit: BoxFit.contain),
-        actions: <Widget>[
-          new FlatButton(
-              onPressed: getNewScaffoldForAccount,
-              child: new Icon(Icons.account_box)),
-          new FlatButton(
-              onPressed: getNewScaffoldForMap,
-              child: new Icon(Icons.gps_fixed)),
-          new FlatButton(
-              onPressed: getNewScaffoldForShop,
-              child: new Icon(Icons.shopping_cart_rounded)),
-          new FlatButton(
-              onPressed: getNewScaffoldForCamera,
-              child: new Icon(Icons.camera_alt))
-        ],
-        centerTitle: true,
-        elevation: 20.0
       ),
       // body: new Layout(
       // color: Colors.yellow,
@@ -115,35 +127,35 @@ class _Home extends State<Home> {
   void getNewScaffoldForHome() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
-          return new Homepage('Homepage');
-        }));
+      return new Homepage('Homepage');
+    }));
   }
 
   void getNewScaffoldForShop() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
-          return new Shop('Shop');
-        }));
+      return new Shop('Shop');
+    }));
   }
 
   void getNewScaffoldForMap() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
-          return new Map('Map');
-        }));
+      return new Map('Map');
+    }));
   }
 
   void getNewScaffoldForAccount() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
-          return new Map('Account');
-        }));
+      return new Map('Account');
+    }));
   }
 
   void getNewScaffoldForCamera() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
-          return new Shop('Camera');
-        }));
+      return new Shop('Camera');
+    }));
   }
 }
