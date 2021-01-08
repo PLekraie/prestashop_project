@@ -52,8 +52,11 @@ class _Home extends State<Home> {
 
   //Lien à remplacer par celui de notre API
   Future<List> getArticles() async {
-    var response =
-    await Dio().get('https://jsonplaceholder.typicode.com/todos');
+    var response = await Dio().get('http://51.254.205.197/api/products',
+        options: Options(headers: {
+          'Authorization': 'KJWD19115X7NPAJJXMKGDDYBSBRATDKC',
+          'Output-Format': 'JSON'
+        }));
     return response.data;
   }
 
@@ -76,7 +79,7 @@ class _Home extends State<Home> {
                     Scaffold.of(context).openDrawer();
                   },
                   tooltip:
-                  MaterialLocalizations.of(context).openAppDrawerTooltip,
+                      MaterialLocalizations.of(context).openAppDrawerTooltip,
                 );
               },
             ),
@@ -95,20 +98,23 @@ class _Home extends State<Home> {
             children: [
               DrawerHeader(
                   child: TextField(
-                      style: TextStyle(fontSize: 25.0, color: Colors.blueAccent,),
+                      style: TextStyle(
+                        fontSize: 25.0,
+                        color: Colors.blueAccent,
+                      ),
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(
-                              20.0, 15.0, 20.0, 15.0),
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           prefixIcon: Icon(Icons.people),
                           hintText: "Recherche ...",
-                          border: OutlineInputBorder(borderSide: BorderSide(
-                              color: Colors.blueAccent, width: 32.0),
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.blueAccent, width: 32.0),
                               borderRadius: BorderRadius.circular(25.0)),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.white, width: 32.0),
-                              borderRadius: BorderRadius.circular(25.0)))
-                  )),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 32.0),
+                              borderRadius: BorderRadius.circular(25.0))))),
               ListTile(title: new Text("item 1")),
               ListTile(title: new Text("item 2")),
               ListTile(title: new Text("item 2")),
@@ -130,111 +136,111 @@ class _Home extends State<Home> {
                         return Text('Error : ${snapshot.error}');
                       return ListView.builder(
                           itemBuilder: (BuildContext context, int index) {
-                            return Center(
-                                child: new Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      new Card(
-                                          elevation: 5.0,
-                                          child: new Container(
-                                              height: 200,
-                                              width: 200,
-                                              child: new Text(
-                                                  snapshot.data[index]['title']))),
-                                    ]));
-                          });
+                        return Center(
+                            child: new Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                              new Card(
+                                  elevation: 5.0,
+                                  child: new Container(
+                                      height: 200,
+                                      width: 200,
+                                      child: new Text(
+                                          snapshot.data[index]['id']))),
+                            ]));
+                      });
                   }
                 }))
-      //         child: new Column(
-      //   mainAxisAlignment: MainAxisAlignment.start,
-      //   crossAxisAlignment: CrossAxisAlignment.start,
-      //   children: [
-      //     new Card(
-      //         elevation: 5.0,
-      //         child: new Container(
-      //           width: 50,
-      //           height:50,
-      //         )),
-      //     new Card(
-      //         elevation: 5.0,
-      //         child: new Container(
-      //           width: 50,
-      //           height:50,
-      //         )),
-      //   ],
-      // ))),
-      // body: new Layout(
-      // color: Colors.yellow,
-      // margin: EdgeInsets.all(10.0),
-      //   child: new Center(
-      //     // child: new Column(
-      //     //   // mainAxisAlignment: MainAxisAlignment.start,
-      //     //   crossAxisAlignment: CrossAxisAlignment.start,
-      //     //   children: <Widget>[
-      //     //     new Text(
-      //     // 'nouvelle colonne !',
-      //     //     style: new TextStyle(
-      //     //         color: Colors.red,
-      //     //       fontSize: 12.0
-      //     //     ),
-      //     //     ),
-      //     //     new Image.network('https://via.placeholder.com/150')
-      //     //   ],
-      //     // )
-      //     child: new Container(
-      //       margin: EdgeInsets.only(left: 15.0, top: 15.0),
-      //       height: 75.0,
-      //       width: 300,
-      //       color: Colors.deepPurple,
-      //       child: new Row(
-      //         children: <Widget>[
-      //           new Container(
-      //             margin: EdgeInsets.only(left: 15.0),
-      //             height: 50,
-      //             width: 50,
-      //             color: Colors.white,
-      //           )
-      //         ],
-      //       ),
-      //     ),
-      // )
-      // ),
-    );
+        //         child: new Column(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     new Card(
+        //         elevation: 5.0,
+        //         child: new Container(
+        //           width: 50,
+        //           height:50,
+        //         )),
+        //     new Card(
+        //         elevation: 5.0,
+        //         child: new Container(
+        //           width: 50,
+        //           height:50,
+        //         )),
+        //   ],
+        // ))),
+        // body: new Layout(
+        // color: Colors.yellow,
+        // margin: EdgeInsets.all(10.0),
+        //   child: new Center(
+        //     // child: new Column(
+        //     //   // mainAxisAlignment: MainAxisAlignment.start,
+        //     //   crossAxisAlignment: CrossAxisAlignment.start,
+        //     //   children: <Widget>[
+        //     //     new Text(
+        //     // 'nouvelle colonne !',
+        //     //     style: new TextStyle(
+        //     //         color: Colors.red,
+        //     //       fontSize: 12.0
+        //     //     ),
+        //     //     ),
+        //     //     new Image.network('https://via.placeholder.com/150')
+        //     //   ],
+        //     // )
+        //     child: new Container(
+        //       margin: EdgeInsets.only(left: 15.0, top: 15.0),
+        //       height: 75.0,
+        //       width: 300,
+        //       color: Colors.deepPurple,
+        //       child: new Row(
+        //         children: <Widget>[
+        //           new Container(
+        //             margin: EdgeInsets.only(left: 15.0),
+        //             height: 50,
+        //             width: 50,
+        //             color: Colors.white,
+        //           )
+        //         ],
+        //       ),
+        //     ),
+        // )
+        // ),
+        );
   }
 
   void getNewScaffoldForHome() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
-          return new Homepage('Homepage');
-        }));
+      return new Homepage('Homepage');
+    }));
   }
 
   void getNewScaffoldForShop() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
-          return new Shop('Shop');
-        }));
+      return new Shop('Shop');
+    }));
   }
 
   void getNewScaffoldForMap() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
-          return new Map('Map');
-        }));
+      return new Map('Map');
+    }));
   }
 
   void getNewScaffoldForAccount() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
-          return new Account('Account');
-        }));
+      return new Account('Account');
+    }));
   }
 
   void getNewScaffoldForCamera() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
-          return new Shop('Camera');
-        }));
+      return new Shop('Camera');
+    }));
   }
 }
