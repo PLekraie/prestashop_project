@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'account.dart';
@@ -52,12 +54,17 @@ class _Home extends State<Home> {
 
   //Lien à remplacer par celui de notre API
   Future<List> getArticles() async {
-    var response = await Dio().get('http://51.254.205.197/api/products',
-        options: Options(headers: {
-          'Authorization': 'KJWD19115X7NPAJJXMKGDDYBSBRATDKC',
-          'Output-Format': 'JSON'
-        }));
-    return response.data;
+    var response =
+        await Dio().get('http://51.254.205.197/api/products/?display=full',
+            options: Options(headers: {
+              'Authorization':
+                  'Basic S0pXRDE5MTE1WDdOUEFKSlhNS0dERFlCU0JSQVRES0M6',
+              'Output-Format': 'JSON'
+            }));
+    //le premier est pas un vrai article
+    var articlesFromAPI = response.data['products'];
+    articlesFromAPI.removeAt(0);
+    return articlesFromAPI;
   }
 
   @override
@@ -144,10 +151,13 @@ class _Home extends State<Home> {
                               new Card(
                                   elevation: 5.0,
                                   child: new Container(
-                                      height: 200,
+                                      height: 340,
                                       width: 200,
-                                      child: new Text(
-                                          snapshot.data[index]['id']))),
+                                      child: new Column(children: [
+                                        new Text(snapshot.data[index]['name']),
+                                        new Text(
+                                            snapshot.data[index]['description_short'])
+                                      ])))
                             ]));
                       });
                   }
