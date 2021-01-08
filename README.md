@@ -3,7 +3,7 @@
 Une application Flutter fait dans le cadre de nos études à l'EPSI Lille.
 Le but était de faire une application mobile en utilisant l'API prestashop.
 
-## Développeur
+## Développeurs
 
 BERLOW Mara
 DEFFONTAINES Quentin

@@ -31,6 +31,10 @@ dependencies:
   cupertino_icons: ^1.0.0
   dio: ^3.0.10
 
+  # use for authentification
+  firebase_core: "^0.5.3"
+  firebase_auth: "^0.18.4+1"
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
