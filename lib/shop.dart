@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
 
 class Shop extends StatelessWidget {
   String title;
@@ -8,33 +7,39 @@ class Shop extends StatelessWidget {
     this.title = title;
   }
 
+  get getNewScaffoldForAccount => null;
+
+  get getNewScaffoldForShop => null;
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        // title: new Text('Green citizen'),
-        leading: new Image.asset('img/Prestashop-logo.png',
-            fit: BoxFit.contain),
-        actions: <Widget>[
-          new FlatButton(
-              // onPressed: ,
-              child: new Icon(Icons.account_box)),
-          new FlatButton(
-              // onPressed: ,
-              child: new Icon(Icons.gps_fixed)),
-          new FlatButton(
-              // onPressed: ,
-              child: new Icon(Icons.shopping_cart_rounded)),
-          new FlatButton(
-              // onPressed: ,
-              child: new Icon(Icons.camera_alt))
-        ],
-        centerTitle: true,
-        elevation: 20.0,
-        backgroundColor: Colors.green,
-      ),
+          title: Image.asset('img/logo.png'),
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                tooltip:
+                MaterialLocalizations.of(context).openAppDrawerTooltip,
+              );
+            },
+          ),
+          actions: <Widget>[
+            new FlatButton(
+                onPressed: getNewScaffoldForAccount,
+                child: new Icon(Icons.account_circle_outlined)),
+            new FlatButton(
+                onPressed: getNewScaffoldForShop,
+                child: new Icon(Icons.shopping_cart_rounded)),
+          ],
+          centerTitle: true,
+          elevation: 2.0),
       body: new Center(
-        child: Text('liste commerce'),
+        child: Text('Panier'),
       ),
     );
   }
