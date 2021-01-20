@@ -30,6 +30,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   dio: ^3.0.10
+  flutter_html: ^1.2.0
 
   # use for authentification
   firebase_core: "^0.5.3"

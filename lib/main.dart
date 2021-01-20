@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'account.dart';
 import 'shop.dart';
 import 'homepage.dart';
@@ -142,81 +143,47 @@ class _Home extends State<Home> {
                       if (snapshot.hasError)
                         return Text('Error : ${snapshot.error}');
                       return ListView.builder(
+                          itemCount: snapshot.data[0].length, 
                           itemBuilder: (BuildContext context, int index) {
-                        return Center(
-                            child: new Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                              new Card(
-                                  elevation: 5.0,
-                                  child: new Container(
-                                      height: 340,
-                                      width: 200,
-                                      child: new Column(children: [
-                                        new Text(snapshot.data[index]['name']),
-                                        new Text(
-                                            snapshot.data[index]['description_short'])
-                                      ])))
-                            ]));
-                      });
+                            return Center(
+                                child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                  InkWell(
+                                    onTap: () {//TODO ICI UN LIEN VERS UN SCAFFOLD AVEC L'ID EN PARAMETRE (pour pouvoir faire une requete API de l'article)
+                                      getNewScaffoldForProduct(snapshot.data[index]['id']);
+                                      print(snapshot.data[index]['id']);
+                                    },
+                                    child: new Card(
+                                        elevation: 5.0,
+                                        child: new Container(
+                                            height: 340,
+                                            width: 200,
+                                            child: new Column(children: [
+                                              new Text(
+                                                  snapshot.data[index]['name'],
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14)),
+                                              Html(
+                                                  data: snapshot.data[index]
+                                                      ['description_short'])
+                                            ]))),
+                                  )
+                                ]));
+                          });
                   }
-                }))
-        //         child: new Column(
-        //   mainAxisAlignment: MainAxisAlignment.start,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //     new Card(
-        //         elevation: 5.0,
-        //         child: new Container(
-        //           width: 50,
-        //           height:50,
-        //         )),
-        //     new Card(
-        //         elevation: 5.0,
-        //         child: new Container(
-        //           width: 50,
-        //           height:50,
-        //         )),
-        //   ],
-        // ))),
-        // body: new Layout(
-        // color: Colors.yellow,
-        // margin: EdgeInsets.all(10.0),
-        //   child: new Center(
-        //     // child: new Column(
-        //     //   // mainAxisAlignment: MainAxisAlignment.start,
-        //     //   crossAxisAlignment: CrossAxisAlignment.start,
-        //     //   children: <Widget>[
-        //     //     new Text(
-        //     // 'nouvelle colonne !',
-        //     //     style: new TextStyle(
-        //     //         color: Colors.red,
-        //     //       fontSize: 12.0
-        //     //     ),
-        //     //     ),
-        //     //     new Image.network('https://via.placeholder.com/150')
-        //     //   ],
-        //     // )
-        //     child: new Container(
-        //       margin: EdgeInsets.only(left: 15.0, top: 15.0),
-        //       height: 75.0,
-        //       width: 300,
-        //       color: Colors.deepPurple,
-        //       child: new Row(
-        //         children: <Widget>[
-        //           new Container(
-        //             margin: EdgeInsets.only(left: 15.0),
-        //             height: 50,
-        //             width: 50,
-        //             color: Colors.white,
-        //           )
-        //         ],
-        //       ),
-        //     ),
-        // )
-        // ),
-        );
+                })));
+  }
+
+  void getNewScaffoldForProduct(int id) {
+    Navigator.push(context,
+        new MaterialPageRoute(builder: (BuildContext context) {
+          return new Homepage('Homepage');
+        }));
   }
 
   void getNewScaffoldForHome() {
