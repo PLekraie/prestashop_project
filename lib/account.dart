@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prestashop_project/homepage.dart';
 import 'main.dart';
 
 const MaterialColor white = const MaterialColor(
@@ -17,13 +18,20 @@ const MaterialColor white = const MaterialColor(
   },
 );
 
-class Account extends StatelessWidget {
-  String title;
+class _Account extends State<Account>{
+  String title = "Account";
   final _formKey = GlobalKey<FormState>();
+  final controllerName = TextEditingController();
+  final controllerEmail = TextEditingController();
 
-  Account(String title) {
-    this.title = title;
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    controllerName.dispose();
+    controllerEmail.dispose();
+    super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +46,9 @@ class Account extends StatelessWidget {
                   Scaffold.of(context).openDrawer();
                 },
                 tooltip:
-                MaterialLocalizations.of(context).openAppDrawerTooltip,
+                MaterialLocalizations
+                    .of(context)
+                    .openAppDrawerTooltip,
               );
             },
           ),
@@ -56,12 +66,13 @@ class Account extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               TextFormField(
+                controller: controllerEmail,
                 decoration: const InputDecoration(
                   icon: const Icon(Icons.mail),
                   hintText: 'Entrez votre mail',
                   labelText: 'Email',
                 ),
-                validator: (value){
+                validator: (value) {
                   if (value.isEmpty) {
                     return 'Champs obligatoire';
                   }
@@ -69,12 +80,13 @@ class Account extends StatelessWidget {
                 },
               ),
               TextFormField(
+                controller: controllerName,
                 decoration: const InputDecoration(
                   icon: const Icon(Icons.person),
                   hintText: 'Entrez votre nom',
                   labelText: 'Nom',
                 ),
-                validator: (value){
+                validator: (value) {
                   if (value.isEmpty) {
                     return 'Champs obligatoire';
                   }
@@ -88,7 +100,7 @@ class Account extends StatelessWidget {
                   hintText: 'Entrez votre mot de passe',
                   labelText: 'Mot de passe',
                 ),
-                validator: (value){
+                validator: (value) {
                   if (value.isEmpty) {
                     return 'Champs obligatoire';
                   }
@@ -102,8 +114,29 @@ class Account extends StatelessWidget {
                     onPressed: () {
                       // It returns true if the form is valid, otherwise returns false
                       if (_formKey.currentState.validate()) {
-                        // If the form is valid, display a Snackbar.
-                        Scaffold.of(context).showSnackBar(SnackBar(content : Text('Bienvenue !')));
+                        // If the form is valid, display a AlertDialog.
+                        showDialog(
+                          context: context,
+                          builder: (context){
+                            return AlertDialog(
+                                title: new Text("Connecté"),
+                                content: Text('Bienvenue '+controllerName.text+' !'),
+                                actions:[
+                                  new FlatButton(
+                                      child: Text('Suivant'),
+                                      textColor : Colors.blue,
+                                      color : Colors.white,
+                                      onPressed: (){
+                                        Navigator.push(context,
+                                            new MaterialPageRoute(builder: (BuildContext context) {
+                                              return new Home();
+                                            }));
+                                      }
+                                  )
+                                ]
+                            );
+                          }
+                        );
                       }
                     },
                   )
@@ -112,6 +145,18 @@ class Account extends StatelessWidget {
           )
       ),
     );
-
   }
+
+}
+
+class Account extends StatefulWidget {
+
+
+  @override
+  _Account createState() {
+    return new _Account();
+  }
+
+
+
 }

@@ -213,7 +213,7 @@ class _Home extends State<Home> {
   void getNewScaffoldForAccount() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
-      return new Account('Account');
+      return new Account();
     }));
   }
 
