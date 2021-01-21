@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
@@ -143,7 +144,7 @@ class _Home extends State<Home> {
                       if (snapshot.hasError)
                         return Text('Error : ${snapshot.error}');
                       return ListView.builder(
-                          itemCount: snapshot.data[0].length, 
+                          itemCount: 18,
                           itemBuilder: (BuildContext context, int index) {
                             return Center(
                                 child: new Column(
@@ -152,14 +153,16 @@ class _Home extends State<Home> {
                                         CrossAxisAlignment.start,
                                     children: [
                                   InkWell(
-                                    onTap: () {//TODO ICI UN LIEN VERS UN SCAFFOLD AVEC L'ID EN PARAMETRE (pour pouvoir faire une requete API de l'article)
-                                      //getNewScaffoldForProduct(snapshot.data[index]['id']);
+                                    onTap: () {
+                                      getNewScaffoldForProduct(
+                                          snapshot.data[index]['id']);
                                       print(snapshot.data[index]['id']);
                                     },
                                     child: new Card(
-                                        elevation: 5.0,
+                                      elevation: 5.0,
+                                      child: Padding(
+                                        padding: EdgeInsets.fromLTRB(12.0, 25.0, 12.0, 15.0),
                                         child: new Container(
-                                            height: 340,
                                             width: 200,
                                             child: new Column(children: [
                                               new Text(
@@ -171,7 +174,9 @@ class _Home extends State<Home> {
                                               Html(
                                                   data: snapshot.data[index]
                                                       ['description_short'])
-                                            ]))),
+                                            ])),
+                                      ),
+                                    ),
                                   )
                                 ]));
                           });
@@ -179,16 +184,16 @@ class _Home extends State<Home> {
                 })));
   }
 
-  /*void getNewScaffoldForProduct(int id) {
+  void getNewScaffoldForProduct(int id) {
     Navigator.push(context,
-        new MaterialPageRoute(builder: (context) => DetailScreen(id : id)));
-  }*/
+        new MaterialPageRoute(builder: (context) => DetailScreen(id: id)));
+  }
 
   void getNewScaffoldForHome() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
-          return new Homepage('Homepage');
-        }));
+      return new Homepage('Homepage');
+    }));
   }
 
   void getNewScaffoldForShop() {
@@ -217,5 +222,73 @@ class _Home extends State<Home> {
         new MaterialPageRoute(builder: (BuildContext context) {
       return new Shop('Camera');
     }));
+  }
+}
+
+class DetailScreen extends StatefulWidget {
+  final int id;
+
+  DetailScreen({Key key, @required this.id}) : super(key: key);
+
+  @override
+  _DetailScreen createState() {
+    return new _DetailScreen();
+  }
+}
+
+class _DetailScreen extends State<DetailScreen> {
+  Future<LinkedHashMap<String, dynamic>> article;
+
+  Future<LinkedHashMap<String, dynamic>> getArticle(int id) async {
+    var response =
+        await Dio().get('http://51.254.205.197/api/products/' + id.toString(),
+            options: Options(headers: {
+              'Authorization':
+                  'Basic S0pXRDE5MTE1WDdOUEFKSlhNS0dERFlCU0JSQVRES0M6',
+              'Output-Format': 'JSON'
+            }));
+    return response.data['product'];
+  }
+
+  @override
+  void initState() {
+    article = getArticle(widget.id);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: FutureBuilder<LinkedHashMap>(
+            future: article,
+            builder:
+                (BuildContext context, AsyncSnapshot<LinkedHashMap> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Text(snapshot.data['name']);
+              } else {
+                return Text('Connexion en attente');
+              }
+            }),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: FutureBuilder<LinkedHashMap>(
+            future: article,
+            builder:
+                (BuildContext context, AsyncSnapshot<LinkedHashMap> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Column(
+                  children: <Widget>[
+                    Text("Fabricant : " + snapshot.data['manufacturer_name']),
+                    Html(data: "Description : " + snapshot.data['description'])
+                  ],
+                );
+              } else {
+                return Text('Connexion en attente...');
+              }
+            }),
+      ),
+    );
   }
 }
