@@ -153,7 +153,7 @@ class _Home extends State<Home> {
                                     children: [
                                   InkWell(
                                     onTap: () {//TODO ICI UN LIEN VERS UN SCAFFOLD AVEC L'ID EN PARAMETRE (pour pouvoir faire une requete API de l'article)
-                                      getNewScaffoldForProduct(snapshot.data[index]['id']);
+                                      //getNewScaffoldForProduct(snapshot.data[index]['id']);
                                       print(snapshot.data[index]['id']);
                                     },
                                     child: new Card(
@@ -179,18 +179,16 @@ class _Home extends State<Home> {
                 })));
   }
 
-  void getNewScaffoldForProduct(int id) {
+  /*void getNewScaffoldForProduct(int id) {
     Navigator.push(context,
-        new MaterialPageRoute(builder: (BuildContext context) {
-          return new Homepage('Homepage');
-        }));
-  }
+        new MaterialPageRoute(builder: (context) => DetailScreen(id : id)));
+  }*/
 
   void getNewScaffoldForHome() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
-      return new Homepage('Homepage');
-    }));
+          return new Homepage('Homepage');
+        }));
   }
 
   void getNewScaffoldForShop() {
