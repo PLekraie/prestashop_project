@@ -65,6 +65,13 @@ class _Account extends State<Account>{
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Text(
+                'S\'inscrire',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textScaleFactor: 2,
+              ),
               TextFormField(
                 controller: controllerEmail,
                 decoration: const InputDecoration(
