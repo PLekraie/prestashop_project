@@ -1,14 +1,11 @@
 import 'dart:collection';
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'account.dart';
 import 'shop.dart';
-import 'homepage.dart';
-import 'layout.dart';
-import 'map.dart';
+
 
 void main() {
   runApp(new MyApp());
@@ -156,12 +153,12 @@ class _Home extends State<Home> {
                                     onTap: () {
                                       getNewScaffoldForProduct(
                                           snapshot.data[index]['id']);
-                                      print(snapshot.data[index]['id']);
                                     },
                                     child: new Card(
                                       elevation: 5.0,
                                       child: Padding(
-                                        padding: EdgeInsets.fromLTRB(12.0, 25.0, 12.0, 15.0),
+                                        padding: EdgeInsets.fromLTRB(
+                                            12.0, 25.0, 12.0, 15.0),
                                         child: new Container(
                                             width: 200,
                                             child: new Column(children: [
@@ -189,13 +186,6 @@ class _Home extends State<Home> {
         new MaterialPageRoute(builder: (context) => DetailScreen(id: id)));
   }
 
-  void getNewScaffoldForHome() {
-    Navigator.push(context,
-        new MaterialPageRoute(builder: (BuildContext context) {
-      return new Homepage('Homepage');
-    }));
-  }
-
   void getNewScaffoldForShop() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
@@ -203,24 +193,10 @@ class _Home extends State<Home> {
     }));
   }
 
-  void getNewScaffoldForMap() {
-    Navigator.push(context,
-        new MaterialPageRoute(builder: (BuildContext context) {
-      return new Map('Map');
-    }));
-  }
-
   void getNewScaffoldForAccount() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (BuildContext context) {
       return new Account();
-    }));
-  }
-
-  void getNewScaffoldForCamera() {
-    Navigator.push(context,
-        new MaterialPageRoute(builder: (BuildContext context) {
-      return new Shop('Camera');
     }));
   }
 }
